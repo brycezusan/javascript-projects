@@ -44,18 +44,19 @@ function readataCourse(course) {
 
   if (existe) {
     // Actualizamos la cantidad
-    console.log("aumenta la cantidad");
-    const courses = shoppingCart.map((c) => {
-      if (c.id === infoCourse.id) {
-        c.cantidad++;
-        return c
-      }else{
-        return c
-      }
-    });
+    // console.log("aumenta la cantidad");
+    // const courses = shoppingCart.map((c) => {
+    //   if (c.id === infoCourse.id) {
+    //     c.cantidad++;
+    //     return c
+    //   }else{
+    //     return c
+    //   }
+    // });
+    const index = shoppingCart.findIndex( c=> c.id == infoCourse.id)
+    shoppingCart[index].cantidad++
 
     alert('ya se encuentra agregado al carrito')
-    shoppingCart = [...courses]
   } else {
     // LLenamos el carrito con el objeto
     shoppingCart = [...shoppingCart, infoCourse];
