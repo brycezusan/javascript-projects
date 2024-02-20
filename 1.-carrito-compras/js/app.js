@@ -3,7 +3,6 @@
 // variables
 const cart = document.querySelector("#carrito");
 const contentCart = document.querySelector("#lista-carrito tbody");
-const emptyBtn = document.querySelector("#vaciar-carrito");
 const listCourses = document.querySelector("#lista-cursos");
 
 let shoppingCart = [];
