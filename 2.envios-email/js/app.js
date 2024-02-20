@@ -1,5 +1,4 @@
 //email simulator sending
-
 // Listeners
 // Carga del dom
 document.addEventListener("DOMContentLoaded", () => {
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
         alertaExito.remove()
-      }, 3000);
+      }, 2500);
 
     }, 2000);
 
