@@ -2,6 +2,7 @@
 
 // variables
 const cart = document.querySelector("#carrito");
+const cleanCart = document.querySelector("#vaciar-carrito")
 const contentCart = document.querySelector("#lista-carrito tbody");
 const listCourses = document.querySelector("#lista-cursos");
 
@@ -13,13 +14,19 @@ function loadListeners() {
   // add to shopping cart
   listCourses.addEventListener("click", addItemCourse);
   // remove to shopping cart
-  cart.addEventListener('click', deleteCourse)
+  cart.addEventListener("click", deleteCourse);
   // Clean shopping cart
-  cart.addEventListener('click', cleanShoppingCart)
+  cleanCart.addEventListener("click", cleanShoppingCart);
+
+  // sincronizar storage
+  document.addEventListener("DOMContentLoaded", () => {
+    shoppingCart = JSON.parse(localStorage.getItem("carrito")) || [];
+    mostrarCarrito();
+  });
 }
 
 // Functions
-function addItemCourse(e ) {
+function addItemCourse(e) {
   e.preventDefault();
   // prevent bubbling for declaration
   if (e.target.classList.contains("agregar-carrito")) {
@@ -53,10 +60,10 @@ function readataCourse(course) {
     //     return c
     //   }
     // });
-    const index = shoppingCart.findIndex( c=> c.id == infoCourse.id)
-    shoppingCart[index].cantidad++
+    const index = shoppingCart.findIndex((c) => c.id == infoCourse.id);
+    shoppingCart[index].cantidad++;
 
-    alert('ya se encuentra agregado al carrito')
+    alert("ya se encuentra agregado al carrito");
   } else {
     // LLenamos el carrito con el objeto
     shoppingCart = [...shoppingCart, infoCourse];
@@ -87,7 +94,14 @@ function mostrarCarrito() {
     `;
     // agregar el html del carrito
     contentCart.appendChild(row);
+
+    // agregar a storage
+    sinconizarStorage();
   });
+}
+
+function sinconizarStorage() {
+  localStorage.setItem("carrito", JSON.stringify(shoppingCart));
 }
 
 function cleanCartHtml() {
@@ -100,24 +114,25 @@ function cleanCartHtml() {
 }
 
 // Elimina curso del carrito
-function deleteCourse(e){
+function deleteCourse(e) {
   // usamos delegation para evitar el event bubbling
-  if(e.target.classList.contains('borrar-curso')){
-    const cursoId = e.target.getAttribute('data-id')
+  if (e.target.classList.contains("borrar-curso")) {
+    const cursoId = e.target.getAttribute("data-id");
 
     // eliminar del arreglo
-    shoppingCart = shoppingCart.filter( item=> item.id !== cursoId)
-
+    shoppingCart = shoppingCart.filter((item) => item.id !== cursoId);
     // generar html
-    mostrarCarrito()
+    sinconizarStorage()
+    mostrarCarrito();
   }
 }
 
 // Limpiar carrito
-function cleanShoppingCart(e){
-  if(e.target.classList.contains('button')){
-    shoppingCart = []
+function cleanShoppingCart(e) {
+  if (e.target.classList.contains("button")) {
+    shoppingCart = [];
+    localStorage.removeItem("carrito");
   }
-  cleanCartHtml()
+  cleanCartHtml();
 }
 // <= >= ===
